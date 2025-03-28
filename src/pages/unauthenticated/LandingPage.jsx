@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const navigate = useNavigate();
   return (
@@ -7,6 +7,7 @@ const LandingPage = () => {
       Home
       <p onClick={() => navigate("/sign-up")}>link to sign up</p>
       <p onClick={() => navigate("/sign-in")}>link to sign in</p>
+      <Link to="dashboard">Link to user dashboard</Link>
     </div>
   );
 };
