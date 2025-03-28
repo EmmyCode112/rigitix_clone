@@ -7,6 +7,8 @@ import {
 import SignUp from "./auth/signup/SignUp";
 import Signin from "./auth/signin/Signin";
 import LandingPage from "./pages/unauthenticated/LandingPage";
+import UserDashboard from "./pages/UserDashboard";
+import Dashboard from "./components/UserDashboard/Dashboard";
 // import Cookies from "js-cookie";
 // import { useEffect } from "react";
 // import { useSelector, useDispatch } from "react-redux";
@@ -36,6 +38,9 @@ const App = () => {
 
         {/* Default Route */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="dashboard" element={<UserDashboard />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   );
