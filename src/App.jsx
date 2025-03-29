@@ -7,6 +7,12 @@ import {
 import SignUp from "./auth/signup/SignUp";
 import Signin from "./auth/signin/Signin";
 import LandingPage from "./pages/unauthenticated/LandingPage";
+import OTP from "@/components/OTP";
+import ForgottenPassword from "./auth/PasswordReset/ForgottenPassword";
+
+import VendorSetup from "@/components/setup/VendorSetup";
+import AttendeeSetup from "@/components/setup/AttendeeSetup";
+import OrganizerSetup from "@/components/setup/OrganizerSetup";
 // import Cookies from "js-cookie";
 // import { useEffect } from "react";
 // import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +39,12 @@ const App = () => {
         {/* Unauthenticated Routes */}
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<Signin />} />
-
+        <Route path="/otp" element={<OTP />} />
+        <Route path="/forgotten-password" element={<ForgottenPassword />} />
+        {/* Different setup pages */}
+        <Route path="/setup/vendors" element={<VendorSetup />} />
+        <Route path="/setup/attendee" element={<AttendeeSetup />} />
+        <Route path="/setup/organizers" element={<OrganizerSetup />} />
         {/* Default Route */}
         <Route path="/" element={<LandingPage />} />
       </Routes>
