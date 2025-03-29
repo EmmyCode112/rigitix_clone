@@ -9,7 +9,8 @@ import Signin from "./auth/signin/Signin";
 import LandingPage from "./pages/unauthenticated/LandingPage";
 import OTP from "@/components/OTP";
 import ForgottenPassword from "./auth/PasswordReset/ForgottenPassword";
-
+import UserDashboard from "./pages/UserDashboard";
+import Dashboard from "./components/UserDashboard/Dashboard";
 import VendorSetup from "@/components/setup/VendorSetup";
 import AttendeeSetup from "@/components/setup/AttendeeSetup";
 import OrganizerSetup from "@/components/setup/OrganizerSetup";
@@ -47,6 +48,9 @@ const App = () => {
         <Route path="/setup/organizers" element={<OrganizerSetup />} />
         {/* Default Route */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="dashboard" element={<UserDashboard />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   );
