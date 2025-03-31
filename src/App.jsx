@@ -66,6 +66,7 @@ const App = () => {
           <Route path="" element={<Dashboard />} />
           <Route path="ticket-empty" element={<UserTicketsEmpty />} />
           <Route path="my-tickets" element={<UserTickets />} />
+          push my u
         </Route>
         <Route path="organizer-dashboard" element={<UserDashboard />}>
           <Route path="" element={<OrganizerDashboard />} />
