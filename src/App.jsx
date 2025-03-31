@@ -7,7 +7,10 @@ import {
 import SignUp from "./auth/signup/SignUp";
 import Signin from "./auth/signin/Signin";
 import LandingPage from "./pages/unauthenticated/LandingPage";
-import OTP from "@/components/OTP";
+import EventDetails from "./pages/unauthenticated/EventDetails";
+import Events from "./pages/unauthenticated/Events";
+import Home from "./pages/unauthenticated/Home";
+import UserSetUp from "@/components/UserSetUp";
 import ForgottenPassword from "./auth/PasswordReset/ForgottenPassword";
 import UserDashboard from "./pages/UserDashboard";
 import Dashboard from "./components/UserDashboard/Dashboard";
@@ -40,15 +43,19 @@ const App = () => {
         {/* Unauthenticated Routes */}
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<Signin />} />
-        <Route path="/otp" element={<OTP />} />
         <Route path="/forgotten-password" element={<ForgottenPassword />} />
+        <Route path="/setup-user" element={<UserSetUp />} />
         {/* Different setup pages */}
         <Route path="/setup/vendors" element={<VendorSetup />} />
         <Route path="/setup/attendee" element={<AttendeeSetup />} />
         <Route path="/setup/organizers" element={<OrganizerSetup />} />
         {/* Default Route */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="dashboard" element={<UserDashboard />}>
+        <Route path="/" element={<LandingPage />}>
+          <Route index element={<Home />} />
+          <Route path="event/:id" element={<EventDetails />} />
+          <Route path="events" element={<Events />} />
+        </Route>
+        <Route path="dashboard/Attendee" element={<UserDashboard />}>
           <Route path="" element={<Dashboard />} />
         </Route>
       </Routes>

@@ -1,10 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { icons } from "@/assets/asset";
 import Button from "@/components/buttons/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Signin = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignin = async () => {
+    setError("");
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://test2.coderigi.online/api/login",
+        { email, password }
+      );
+
+      console.log("response", response);
+
+      const { token } = response.data.token;
+      const userType = response.data.user.user_type;
+      Cookies.set("authToken", token);
+      Cookies.set("userType", userType);
+
+      // Route user based on type
+      if (userType === "Attendee") navigate(`/dashboard/${userType}`);
+      else navigate("/");
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data.message || "Invalid credentials");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="p-5 flex h-screen overflow-hidden items-center">
@@ -38,7 +79,7 @@ const Signin = () => {
           <p className="text-[14px] text-[#645D5D] font-normal">
             Sign in to access your account and manage your events seamlessly
           </p>
-
+          {error && <p className="text-red-500">{error}</p>}
           <div className="flex flex-col gap-10 mt-9">
             <label className="flex flex-col gap-4">
               <p className="text-[#101928] text-[14px] font-medium text-left">
@@ -47,6 +88,8 @@ const Signin = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="text-[#101928] text-[14px] font-medium border border-[#D0D5DD] rounded-[12px] p-4 placeholder:text-[#BEBEBE] placeholder:text-[12px] outline-[#F87B07]"
               />
             </label>
@@ -57,13 +100,17 @@ const Signin = () => {
               </p>
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="text-[#101928] text-[14px] font-medium border border-[#D0D5DD] rounded-[12px] p-4 placeholder:text-[#BEBEBE] placeholder:text-[12px] outline-[#F87B07]"
               />
             </label>
 
             <Button
-              label="Sign in"
+              label={loading ? "Signing in..." : "Sign in"}
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px]"
+              onClick={handleSignin}
+              disabled={loading}
             />
           </div>
           <div className="flex justify-between mt-2">

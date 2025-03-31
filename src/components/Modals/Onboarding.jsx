@@ -1,19 +1,47 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 import { icons } from "@/assets/asset";
 import Button from "@/components/buttons/Button";
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSelect = (selectedType) => {
-    setSelectedType(selectedType);
+  const handleSelect = (type) => {
+    setSelectedType(type);
+    setError(""); // Clear error when user makes a selection
   };
 
-  const handleContinue = () => {
-    if (selectedType) {
-      navigate(`/setup/${selectedType.toLowerCase()}`);
+  const handleContinue = async () => {
+    if (!selectedType) {
+      setError("Please select a user type.");
+      return;
+    }
+
+    // Fetch existing user details if available
+    const storedUserDetails = Cookies.get("userDetails");
+    const existingData = storedUserDetails ? JSON.parse(storedUserDetails) : {};
+
+    const userDetails = {
+      ...existingData,
+      userType: selectedType,
+    };
+
+    Cookies.set("userDetails", JSON.stringify(userDetails));
+
+    try {
+      const response = await axios.post(
+        "https://test2.coderigi.online/api/auth/complete-signup",
+        userDetails
+      );
+      console.log("API Response:", response);
+      navigate(`/setup/${selectedType}`);
+    } catch (err) {
+      console.error("Error:", err.response ? err.response.data : err.message);
+      setError("Failed to save user type. Please try again.");
     }
   };
 
@@ -26,21 +54,23 @@ const Onboarding = () => {
               How would you like to start?
             </p>
 
-            {["Attendee", "Organizers", "Vendors"].map((option) => (
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            {["Attendee", "Organizer", "Vendor"].map((option) => (
               <div
                 key={option}
                 className={`border flex justify-between items-center w-[404px] p-4 rounded-[18px] cursor-pointer ${
-                  selectedType === option.toLowerCase()
+                  selectedType === option
                     ? "border-[#F87B07]"
                     : "border-[#D0D5DD]"
                 }`}
-                onClick={() => handleSelect(option.toLowerCase())}
+                onClick={() => handleSelect(option)}
               >
                 <div className="flex items-center gap-4">
                   <img src={icons.FeaturedIcon} alt={option} />
                   <p>{option}</p>
                 </div>
-                {selectedType === option.toLowerCase() && (
+                {selectedType === option && (
                   <div>
                     <img src={icons.Checkbox} alt="active" />
                   </div>
@@ -53,7 +83,7 @@ const Onboarding = () => {
               label="Continue"
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px] mt-4"
               onClick={handleContinue}
-              disabled={!selectedType} // Disable button if no selection
+              disabled={!selectedType}
             />
           </div>
         </div>

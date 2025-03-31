@@ -4,6 +4,7 @@ import Button from "@/components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import OTP from "@/components/OTP";
 import { useEmail } from "@/components/OTP";
+import Cookies from "js-cookies";
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -16,14 +17,47 @@ const SignUp = () => {
     return emailReg.test(email);
   };
 
-  const handleContinue = () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setError(""); // Reset error message
+
     if (!email) {
       setError("Email required");
-    } else if (!validateEmail(email)) {
+      return;
+    }
+
+    if (!validateEmail(email)) {
       setError("Invalid email format");
-    } else {
-      setError("");
-      navigate("/otp");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://test2.coderigi.online/api/auth/initiate-signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Sign up failed");
+        return;
+      }
+
+      // Store email in js-cookies
+      Cookies.setItem("userEmail", email, { expires: 1 }); // Expires in 1 day
+
+      console.log("Sign up successful", data);
+      setOpenOtp(true);
+    } catch (error) {
+      setError("Network error, please try again");
+      console.error("Error:", error.message);
     }
   };
 
@@ -82,7 +116,7 @@ const SignUp = () => {
             <Button
               label="Continue"
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px]"
-              onClick={handleContinue}
+              onClick={handleSignUp}
             />
           </div>
           <div className="flex items-center mt-7 mb-6 gap-1">
@@ -104,6 +138,8 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+
+      {openOtp && <OTP onClose={() => setOpenOtp(false)} />}
     </div>
   );
 };

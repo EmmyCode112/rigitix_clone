@@ -1,12 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Outlet } from "react-router-dom";
+import Header from "@/components/landingPage/Header";
+
+import Footer from "@/components/landingPage/Footer";
+
 const LandingPage = () => {
-  const navigate = useNavigate();
   return (
     <div>
+      <Header />
+      <Outlet />
+      <Footer />
       Home
-      <p onClick={() => navigate("/sign-up")}>link to sign up</p>
-      <p onClick={() => navigate("/sign-in")}>link to sign in</p>
       <Link to="dashboard">Link to user dashboard</Link>
     </div>
   );

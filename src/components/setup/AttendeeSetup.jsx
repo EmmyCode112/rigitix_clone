@@ -13,7 +13,7 @@ const AttendeeSetup = () => {
 
   const handleNext = () => {
     if (step === 3) {
-      navigate("/attendee/dashboard"); // Redirect to Attendee Dashboard
+      navigate("/dashboard/attendee"); // Redirect to Attendee Dashboard
     } else {
       setStep(step + 1);
     }
