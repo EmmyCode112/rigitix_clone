@@ -14,6 +14,13 @@ import UserSetUp from "@/components/UserSetUp";
 import ForgottenPassword from "./auth/PasswordReset/ForgottenPassword";
 import UserDashboard from "./pages/UserDashboard";
 import Dashboard from "./components/UserDashboard/Dashboard";
+import UserTicketsEmpty from "./components/UserDashboard/UserTicketsEmpty";
+import UserTickets from "./components/UserDashboard/UserTickets";
+import OrganizerDashboard from "./components/OrganizerDashboard/Dashboard";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-time-picker/dist/TimePicker.css";
+
 import VendorSetup from "@/components/setup/VendorSetup";
 import AttendeeSetup from "@/components/setup/AttendeeSetup";
 import OrganizerSetup from "@/components/setup/OrganizerSetup";
@@ -57,6 +64,11 @@ const App = () => {
         </Route>
         <Route path="dashboard/Attendee" element={<UserDashboard />}>
           <Route path="" element={<Dashboard />} />
+          <Route path="ticket-empty" element={<UserTicketsEmpty />} />
+          <Route path="my-tickets" element={<UserTickets />} />
+        </Route>
+        <Route path="organizer-dashboard" element={<UserDashboard />}>
+          <Route path="" element={<OrganizerDashboard />} />
         </Route>
       </Routes>
     </Router>

@@ -1,53 +1,97 @@
-<div className=" fixed z-50 h-screen overflow-hidden bg-white w-full left-0 top-0">
-  <div className="p-5 flex  items-center">
-    <div className="bg-black px-[60px] pt-[38px] pb-[79px] flex flex-col justify-between gap-[79px] rounded-[30px] h-full basis-[45%]">
-      <img src={icons.rigitix} className="w-[105px]" alt="logo" />
-    </div>
-    <div className="flex flex-col items-center gap-6 lg:basis-[55%] lg:px-[133px]">
-      <h2 className="text-2xl font-bold">OTP Verification</h2>
-      <p>We've sent a verification code to {email}</p>
-      <div className="flex gap-3" onPaste={handlePaste}>
-        {otp.map((digit, index) => (
-          <input
-            key={index}
-            type="text"
-            maxLength="1"
-            value={digit}
-            ref={(el) => (inputRefs.current[index] = el)}
-            onChange={(e) => handleChange(index, e.target.value)}
-            className="w-12 h-12 text-center border rounded text-xl font-bold"
-          />
-        ))}
-      </div>
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { icons } from "@/assets/asset";
+import Button from "@/components/buttons/Button";
 
-      <Button
-        label={verifying ? "Verifying..." : "Continue"}
-        onClick={verifyOtp}
-        disabled={otp.join(" ").length !== 6 || verifying}
-        className="py-2 px-6 rounded w-full bg-[#F87B07] text-white"
-      />
+const Onboarding = () => {
+  const navigate = useNavigate();
+  const [selectedType, setSelectedType] = useState("");
+  const [error, setError] = useState("");
 
-      <div className="flex justify-between items-center gap-4 w-full">
-        <div>
-          Didn't receive the OTP? click to{" "}
-          <Button
-            label={resending ? "Sending..." : "Resend"}
-            onClick={sendOtp}
-            disabled={resending || countdown > 0}
-            className={`border-none p-0 text-[#F87B07] bg-white ${
-              resending || countdown > 0 ? "text-[#F87B07] bg-white" : ""
-            }`}
-          />
-        </div>
-        <div className="text-gray-700 text-lg font-semibold">
-          {countdown > 0
-            ? `Resend OTP in ${Math.floor(countdown / 60)}:${String(
-                countdown % 60
-              ).padStart(2, "0")}`
-            : "You can resend OTP now."}
+  const handleSelect = (type) => {
+    setSelectedType(type);
+    setError(""); // Clear error when user makes a selection
+  };
+
+  const handleContinue = async () => {
+    if (!selectedType) {
+      setError("Please select a user type.");
+      return;
+    }
+
+    const userDetails = {
+      userType: selectedType,
+      dob: "1990-01-01", // Replace with actual values
+      email: "user@example.com",
+      gender: "Male",
+      name: "John Doe",
+      password: "Password@123",
+      password_confirmation: "Password@123",
+      phone: "+1234567890",
+    };
+
+    Cookies.set("userDetails", JSON.stringify(userDetails));
+
+    try {
+      const response = await axios.post(
+        "https://test2.coderigi.online/api/auth/complete-signup",
+        userDetails
+      );
+      console.log("API Response:", response);
+      navigate(`/setup/${selectedType}`);
+    } catch (err) {
+      console.error("Error:", err.response ? err.response.data : err.message);
+      setError("Failed to save user type. Please try again.");
+    }
+  };
+
+  return (
+    <div className="fixed bg-white w-full h-screen">
+      <div className="w-full h-full items-center justify-center flex">
+        <div className="border border-[#00000040] p-12 rounded-[16px] h-[450px] w-[500px]">
+          <div className="flex flex-col gap-4 w-full">
+            <p className="text-black text-[14px] font-normal">
+              How would you like to start?
+            </p>
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            {["Attendee", "Organizer", "Vendor"].map((option) => (
+              <div
+                key={option}
+                className={`border flex justify-between items-center w-[404px] p-4 rounded-[18px] cursor-pointer ${
+                  selectedType === option
+                    ? "border-[#F87B07]"
+                    : "border-[#D0D5DD]"
+                }`}
+                onClick={() => handleSelect(option)}
+              >
+                <div className="flex items-center gap-4">
+                  <img src={icons.FeaturedIcon} alt={option} />
+                  <p>{option}</p>
+                </div>
+                {selectedType === option && (
+                  <div>
+                    <img src={icons.Checkbox} alt="active" />
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Continue Button */}
+            <Button
+              label="Continue"
+              className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px] mt-4"
+              onClick={handleContinue}
+              disabled={!selectedType}
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>;
+  );
+};
+
+export default Onboarding;
