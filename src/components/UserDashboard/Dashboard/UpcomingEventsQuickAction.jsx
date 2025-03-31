@@ -20,7 +20,7 @@ const UpcomingEventsQuickAction = () => {
     <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4">
       {/* Left Column: Upcoming Events */}
       <div className="bg-white p-4 shadow-sm border border-gray-200 rounded-xl">
-        <h2 className="text-xl font-semibold text-gray-800 mb-6">
+        <h2 className="text-lg font-medium text-gray-800 mb-3">
           Upcoming Events
         </h2>
 
@@ -63,7 +63,7 @@ const UpcomingEventsQuickAction = () => {
 
       {/* Right Column: Quick Action */}
       <div className="bg-white p-4 shadow-sm border border-gray-200 rounded-xl">
-        <h2 className="text-xl font-semibold text-gray-800 mb-20">
+        <h2 className="text-lg font-medium text-gray-800 mb-14">
           Quick Action
         </h2>
 
@@ -71,70 +71,68 @@ const UpcomingEventsQuickAction = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {/* Action 1 */}
           <div className="flex items-center">
-            <div className="w-14 h-14 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
+            <div className="w-10 h-10 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
               <FontAwesomeIcon
                 icon={faCalendar}
-                size="xl"
+                size="l"
                 className="text-gray-500"
               />
             </div>
             <div>
-              <p className="text-lg text-gray-900">Engage Events</p>
-              <p className="text-gray-500">Amarachi@myma401.com</p>
+              <p className=" text-medium">Engage Events</p>
+              <p className="text-sm text-gray-500">Amarachi@myma401.com</p>
             </div>
             <img src={arrowRightIcon} alt="Icon" className="ml-auto" />
           </div>
 
           {/* Action 2 */}
           <div className="flex items-center">
-            <div className="w-14 h-14 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
+            <div className="w-10 h-10 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
               <FontAwesomeIcon
                 icon={faPaperPlane}
-                size="xl"
+                size="l"
                 className="text-gray-500"
               />
             </div>
             <div>
-              <p className="text-lg font-semibold text-gray-900">
-                Create Event
-              </p>
-              <p className="text-gray-500">AmarachiSignUp.flyn.com</p>
+              <p className=" font-medium text-gray-900">Create Event</p>
+              <p className="text-sm text-gray-500">AmarachiSignUp.flyn.com</p>
             </div>
             <img src={arrowRightIcon} alt="Icon" className="ml-auto" />
           </div>
 
           {/* Action 3 */}
           <div className="flex items-center">
-            <div className="w-14 h-14 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
+            <div className="w-10 h-10 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
               <FontAwesomeIcon
                 icon={faMicrophoneLines}
-                size="xl"
+                size="l"
                 className="text-gray-500"
               />
             </div>
             <div>
-              <p className="text-lg font-semibold text-gray-900">
+              <p className=" font-medium text-gray-900">
                 Create Confirm Design
               </p>
-              <p className="text-gray-500">AmarachiBroadcast7team.com</p>
+              <p className="text-sm text-gray-500">
+                AmarachiBroadcast7team.com
+              </p>
             </div>
             <img src={arrowRightIcon} alt="Icon" className="ml-auto" />
           </div>
 
           {/* Action 4 */}
           <div className="flex items-center">
-            <div className="w-14 h-14 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
+            <div className="w-10 h-10 bg-[#F0F2F5] rounded-full flex items-center justify-center mr-4">
               <FontAwesomeIcon
                 icon={faBullhorn}
-                size="xl"
+                size="l"
                 className="text-gray-500"
               />
             </div>
             <div>
-              <p className="text-lg font-semibold text-gray-900">
-                Add Follow Up
-              </p>
-              <p className="text-gray-500">Request immediate help</p>
+              <p className=" font-medium text-gray-900">Add Follow Up</p>
+              <p className="text-sm text-gray-500">Request immediate help</p>
             </div>
             <img src={arrowRightIcon} alt="Icon" className="ml-auto" />
           </div>

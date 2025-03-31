@@ -46,37 +46,35 @@ const RecommendedOrganizers = () => {
         {organizersData.map((organizer) => (
           <div
             key={organizer.id}
-            className="border border-gray-200 rounded-lg p-6 bg-white"
+            className="border border-gray-200 rounded-lg p-3 bg-white"
           >
             {/* Top: Avatar, Name & Role */}
             <div className="flex items-center mb-3">
               <img
                 src={organizer.avatar}
                 alt={organizer.name}
-                className="w-12 h-12 rounded-full object-cover mr-4"
+                className="w-10 h-10 rounded-full object-cover mr-2"
               />
               <div>
-                <p className="text-lg font-semibold text-gray-800">
-                  {organizer.name}
-                </p>
+                <p className="font-medium text-gray-800">{organizer.name}</p>
                 <p className="text-sm text-gray-500">{organizer.role}</p>
               </div>
             </div>
 
             {/* Location */}
-            <p className="text-gray-600 mb-4">{organizer.location}</p>
+            <p className="text-sm text-gray-600 mb-4">{organizer.location}</p>
 
-            <div className="h-0.5 -mx-6 bg-gray-200" />
+            <div className="h-[1px] -mx-3 bg-gray-200" />
 
             {/* Bottom: Category Tag & View Profile Button */}
             <div className="flex items-center justify-between mt-3">
               {/* Category Tag */}
-              <span className="text-sm font-medium px-3 py-2 rounded-full bg-[#E7F6EC] text-[#036B26]">
+              <span className="text-sm font-medium px-2 py-1 rounded-full bg-[#E7F6EC] text-[#036B26]">
                 {organizer.category}
               </span>
 
               {/* View Profile Button */}
-              <button className="text-sm font-medium border border-gray-300 rounded-lg px-4 py-3 hover:bg-gray-50">
+              <button className="text-sm font-medium border border-gray-300 rounded-lg px-3 py-2 hover:bg-gray-50">
                 View Profile
               </button>
             </div>
