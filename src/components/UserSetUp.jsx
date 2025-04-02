@@ -39,7 +39,7 @@ const UserSetUp = () => {
       dob: date,
     }));
 
-    document.activeElement.blur(); // Blur the active element to close the picker
+    document.activeElement.blur();
   };
 
   const handleGenderSelect = (gender) => {

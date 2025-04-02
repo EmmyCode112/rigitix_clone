@@ -33,9 +33,7 @@ const Signin = () => {
       Cookies.set("authToken", token);
       Cookies.set("userType", userType);
 
-      // Route user based on type
-      if (userType === "Attendee") navigate(`/dashboard/${userType}`);
-      else navigate("/");
+      navigate("/");
     } catch (err) {
       if (err.response) {
         setError(err.response.data.message || "Invalid credentials");
@@ -65,7 +63,7 @@ const Signin = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-end gap-10 lg:basis-[55%] lg:px-[133px] overflow-y-scroll h-full hideScrollBar">
+      <div className="flex flex-col items-end gap-10 lg:basis-[55%] lg:px-[133px] justify-center overflow-y-scroll h-full hideScrollBar">
         <p
           className="text-[#EB5017] font-bold cursor-pointer"
           onClick={() => navigate("/sign-up")}
@@ -79,7 +77,7 @@ const Signin = () => {
           <p className="text-[14px] text-[#645D5D] font-normal">
             Sign in to access your account and manage your events seamlessly
           </p>
-          {error && <p className="text-red-500">{error}</p>}
+
           <div className="flex flex-col gap-10 mt-9">
             <label className="flex flex-col gap-4">
               <p className="text-[#101928] text-[14px] font-medium text-left">
@@ -104,8 +102,8 @@ const Signin = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="text-[#101928] text-[14px] font-medium border border-[#D0D5DD] rounded-[12px] p-4 placeholder:text-[#BEBEBE] placeholder:text-[12px] outline-[#F87B07]"
               />
+              {error && <p className="text-red-500">{error}</p>}
             </label>
-
             <Button
               label={loading ? "Signing in..." : "Sign in"}
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px]"

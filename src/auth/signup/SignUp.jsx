@@ -11,6 +11,7 @@ const SignUp = () => {
   const { email, setEmail } = useEmail();
   const [error, setError] = useState("");
   const [openOtp, setOpenOtp] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => {
     const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,6 +21,7 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
+    setLoading(true); // Start loading
 
     if (!email) {
       setError("Email required");
@@ -44,9 +46,14 @@ const SignUp = () => {
       );
 
       const data = await response.json();
+      console.log("response", data);
 
       if (!response.ok) {
-        setError(data.message || "Sign up failed");
+        if (data.error?.toLowerCase().includes("email already registered")) {
+          setError("This email is already registered. Please sign in.");
+        } else {
+          setError(data.error || "Sign up failed");
+        }
         return;
       }
 
@@ -56,11 +63,11 @@ const SignUp = () => {
       console.log("Sign up successful", data);
       setOpenOtp(true);
     } catch (error) {
-      setError("Network error, please try again");
-      console.error("Error:", error.message);
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
-
   return (
     <div className="p-5 flex h-screen overflow-hidden items-center">
       <div className="bg-black px-[60px] pt-[38px] pb-[79px] flex flex-col gap-[79px] rounded-[30px] h-full basis-[45%]">
@@ -114,9 +121,10 @@ const SignUp = () => {
             </label>
 
             <Button
-              label="Continue"
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px]"
               onClick={handleSignUp}
+              label={loading ? "Submitting..." : "Continue"}
+              disabled={loading}
             />
           </div>
           <div className="flex items-center mt-7 mb-6 gap-1">

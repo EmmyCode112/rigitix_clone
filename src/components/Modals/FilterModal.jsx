@@ -51,7 +51,7 @@ const FilterModal = ({ isOpen, onClose }) => {
   return (
     <div
       id="modal-overlay"
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-end items-end z-50 top-0 left-0"
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-end items-center z-50 top-0 left-0"
     >
       <div className="bg-white p-6 rounded-lg w-[350px] shadow-lg max-h-[95vh] overflow-y-scroll mr-[50px]">
         <h2 className="text-lg text-left font-bold mb-2">Filter Options</h2>

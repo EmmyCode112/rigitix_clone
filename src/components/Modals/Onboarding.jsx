@@ -9,7 +9,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("");
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleSelect = (type) => {
     setSelectedType(type);
     setError(""); // Clear error when user makes a selection
@@ -20,6 +20,7 @@ const Onboarding = () => {
       setError("Please select a user type.");
       return;
     }
+    setLoading(true); // Start loading
 
     // Fetch existing user details if available
     const storedUserDetails = Cookies.get("userDetails");
@@ -40,15 +41,24 @@ const Onboarding = () => {
       console.log("API Response:", response);
       navigate(`/setup/${selectedType}`);
     } catch (err) {
-      console.error("Error:", err.response ? err.response.data : err.message);
-      setError("Failed to save user type. Please try again.");
+      const backendError = err.response?.data?.errors;
+      if (backendError) {
+        const errorMessage = Object.values(backendError).flat().join(", ");
+        setError(errorMessage);
+      } else {
+        setError(
+          err.response?.data?.message || "An unexpected error occurred."
+        );
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <div className="fixed bg-white w-full h-screen">
       <div className="w-full h-full items-center justify-center flex">
-        <div className="border border-[#00000040] p-12 rounded-[16px] h-[450px] w-[500px]">
+        <div className="border border-[#00000040] p-12 rounded-[16px] max-h-[80%] h-auto min-h-[450px] w-[500px]">
           <div className="flex flex-col gap-4 w-full">
             <p className="text-black text-[14px] font-normal">
               How would you like to start?
@@ -80,10 +90,10 @@ const Onboarding = () => {
 
             {/* Continue Button */}
             <Button
-              label="Continue"
+              label={loading ? "Submitting..." : "Continue"}
               className="w-full bg-[#F87B07] text-white py-4 px-6 rounded-[12px] mt-4"
               onClick={handleContinue}
-              disabled={!selectedType}
+              disabled={!selectedType || loading}
             />
           </div>
         </div>

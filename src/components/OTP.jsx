@@ -135,12 +135,29 @@ const OTP = ({ onClose }) => {
   return (
     <div className="fixed z-50 h-screen overflow-hidden bg-white h-screen w-full left-0 top-0">
       <div className="p-5 h-full flex items-center">
-        <div className="bg-black px-[60px] pt-[38px] pb-[79px] flex flex-col justify-between gap-[79px] rounded-[30px] h-full basis-[45%]">
+        <div className="bg-black px-[60px] pt-[38px] pb-[79px] flex flex-col gap-[79px] rounded-[30px] h-full basis-[45%]">
           <img src={icons.rigitix} className="w-[105px]" alt="logo" />
+
+          <div className="flex flex-col gap-[71px]">
+            <h2 className="text-[37px] font-semibold tracking-[-2px] text-white max-w-[75%]">
+              rig<span className="text-[#F87B07]">ti</span>
+              <span className="text-[#F87B07]">X</span>: Where Events Go
+              Next-Level with Blockchain Magic
+            </h2>
+            <p className="text-[#F0E6E6] font-normal text-[16px]">
+              Rigitix revolutionizes events with blockchain-powered ticketing,
+              management, and engagement—ensuring security, transparency, and a
+              seamless experience. The future of events is here.
+            </p>
+          </div>
         </div>
         <div className="flex flex-col items-center gap-6 lg:basis-[55%] lg:px-[133px]">
-          <h2 className="text-2xl font-bold">OTP Verification</h2>
-          <p>We've sent a verification code to {email}</p>
+          <h2 className="text-[32px] text-[#1B1818] font-bold">
+            OTP Verification
+          </h2>
+          <p className="text-[14px] text-[#645D5D] font-normal">
+            We've sent a verification code to {email}
+          </p>
           <div className="flex gap-3" onPaste={handlePaste}>
             {otp.map((digit, index) => (
               <input
@@ -151,7 +168,7 @@ const OTP = ({ onClose }) => {
                 ref={(el) => (inputRefs.current[index] = el)}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-12 text-center border rounded text-xl font-bold"
+                className="w-12 h-12 text-center border rounded text-xl font-bold outline-[#F87B07]"
               />
             ))}
           </div>
@@ -161,18 +178,18 @@ const OTP = ({ onClose }) => {
             label={verifying ? "Verifying..." : "Continue"}
             onClick={verifyOtp}
             disabled={otp.join("").length !== 6 || verifying}
-            className="py-2 px-6 rounded w-full bg-[#F87B07] text-white"
+            className="py-y px-6 rounded-[12px] w-full bg-[#F87B07] text-white"
           />
 
-          <div className="flex justify-between items-center gap-4 w-full">
-            <div>
+          <div className="flex justify-between  items-center gap-4 w-full">
+            <div className="flex items-center gap-1 text-[#645D5D] text-[14px] ">
               Didn't receive the OTP? click to{" "}
               <p
                 onClick={sendOtp}
                 disabled={resending || countdown > 0}
                 className={`border-none p-0 text-[#F87B07] bg-white ${
                   resending || countdown > 0
-                    ? "text-[#F87B07] bg-white"
+                    ? "text-[#F87B07] bg-white cursor-not-allowed"
                     : "bg-white"
                 }`}
               >

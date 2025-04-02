@@ -3,8 +3,11 @@ import Button from "@/components/buttons/Button";
 import add from "@/assets/icons/checkOutAdd.png";
 import minus from "@/assets/icons/checkOutMinus.png";
 import Payment from "@/components/Modals/Payment";
+import Cookies from "js-cookie";
+import Registration from "../Modals/Registration";
 
 const Checkout = () => {
+  const [registrationModal, setRegistrationModae] = useState(false);
   const ticketData = [
     { type: "Regular", price: 10 },
     { type: "VIP", price: 15 },
@@ -15,7 +18,7 @@ const Checkout = () => {
     ticketData.reduce((acc, ticket) => ({ ...acc, [ticket.type]: 0 }), {})
   );
 
-const handleQuantityChange = (type, change) => {
+  const handleQuantityChange = (type, change) => {
     setQuantities((prev) => ({
       ...prev,
       [type]: Math.max(0, prev[type] + change),
@@ -50,6 +53,15 @@ const handleQuantityChange = (type, change) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openPaymentModal]);
+
+  const handleBuyTicket = () => {
+    const token = Cookies.get("authToken");
+    if (token) {
+      setOpenPaymentModal(true);
+    } else {
+      setRegistrationModae(true);
+    }
+  };
   return (
     <div ref={modalRef} className="relative w-full">
       <div className=" w-[400px] bg-white flex flex-col gap-4">
@@ -91,7 +103,7 @@ const handleQuantityChange = (type, change) => {
           <Button
             label="Checkout"
             className="w-full py-3 bg-[#F87B07] text-white rounded-[18px] font-semibold text-[16px]"
-            onClick={() => setOpenPaymentModal((prev) => !prev)}
+            onClick={handleBuyTicket}
             disabled={subtotal === 0}
           />
         </div>
@@ -99,6 +111,7 @@ const handleQuantityChange = (type, change) => {
       {openPaymentModal && (
         <Payment onClose={() => setOpenPaymentModal(false)} />
       )}
+      {registrationModal && <Registration onClose={setRegistrationModae} />}
     </div>
   );
 };

@@ -22,9 +22,10 @@ const EventDetails = () => {
   const getOrganizerInitials = (name) => {
     if (!name) return ""; // Handle empty case
     const words = name.split(" ");
-    if (words.length === 1) return words[0][0].toUpperCase(); // Single word case
-    return (words[0][0] + words[words.length - 1][0]).toUpperCase(); // First & last letter
+    if (words.length === 1) return words[0][0].toUpperCase();
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase();
   };
+
   return (
     <div>
       <div className="px-[120px]">

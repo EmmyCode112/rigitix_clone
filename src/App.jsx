@@ -54,8 +54,8 @@ const App = () => {
         <Route path="/setup-user" element={<UserSetUp />} />
         {/* Different setup pages */}
         <Route path="/setup/vendors" element={<VendorSetup />} />
-        <Route path="/setup/attendee" element={<AttendeeSetup />} />
-        <Route path="/setup/organizers" element={<OrganizerSetup />} />
+        <Route path="/setup/Attendee" element={<AttendeeSetup />} />
+        <Route path="/setup/Organizers" element={<OrganizerSetup />} />
         {/* Default Route */}
         <Route path="/" element={<LandingPage />}>
           <Route index element={<Home />} />
@@ -64,11 +64,13 @@ const App = () => {
         </Route>
         <Route path="dashboard/Attendee" element={<UserDashboard />}>
           <Route path="" element={<Dashboard />} />
-          <Route path="ticket-empty" element={<UserTicketsEmpty />} />
+          <Route
+            path="dashboard/Attendee/ticket-empty"
+            element={<UserTicketsEmpty />}
+          />
           <Route path="my-tickets" element={<UserTickets />} />
-          push my u
         </Route>
-        <Route path="organizer-dashboard" element={<UserDashboard />}>
+        <Route path="dashboard/Organizer" element={<UserDashboard />}>
           <Route path="" element={<OrganizerDashboard />} />
         </Route>
       </Routes>

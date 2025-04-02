@@ -4,13 +4,16 @@ import App from "./App.jsx";
 import "./index.css";
 import { EmailProvider } from "@/components/OTP";
 import { EventProvider } from "@/context/EventContext";
+import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <EmailProvider>
-      <EventProvider>
-        <App />
-      </EventProvider>
-    </EmailProvider>
+    <AuthProvider>
+      <EmailProvider>
+        <EventProvider>
+          <App />
+        </EventProvider>
+      </EmailProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
